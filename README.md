@@ -7,8 +7,8 @@ Use CGI variables, and the Raku programming language, to keep website visit stat
 Use the Raku programming language, and an SQLite database, to record
 anonymous website visits. The recording algorithms attempt to reject
 web crawlers and other drive-by visitors which exaggerate a website's
-"popularity" using website counters as used in the early days of
-the Internet.
+"popularity" when using website counters commonly found in the early
+days of the Internet.
 
 ## Known-user website visits
 
@@ -18,3 +18,19 @@ certificate that includes their e-mail address.
 The specific use case is for my college class [website](https://usafa-1965.org)
 which uses TLS client certificates to access a classmates-only
 [restricted](https://usafa-1965.org/login/index.shtml) area.
+
+## Details
+
+The system requires several cgi programs and supporting modules, all written in Raku.
+Also required is an SQLite database to keep the data. The interface to the Internet
+is via the virtual interface in the home page's index.shtml file. Such an interface
+line looks something like this:
+
+    <!--#virtual="/path/to/prrogram.raku.cgi" -->
+
+That line executes the "virtual"program every time the page is accessed.
+In order to allow the visitor to see the current statistics we provide
+another virtual link that is activated via a click on another page.
+For example:
+
+
