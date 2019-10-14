@@ -2,9 +2,9 @@
 
 Use CGI variables, and the Raku programming language, to keep website visit statistics
 
-(Note: This solution set is for my long-running Apache web server running multiple 
+**(Note: This solution set is for my long-running Apache web server running multiple 
 virtual hosts. A similar solution set should be available using other web servers,
-but that is left as an exercise for others.  Pull requests are welcome!)
+but that is left as an exercise for others.  Pull requests are welcome!)**
 
 ## Anonymous website visits
 
