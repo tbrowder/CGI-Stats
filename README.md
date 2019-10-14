@@ -28,7 +28,7 @@ line looks something like this:
 
     <!--#virtual="/path/to/prrogram.raku.cgi" -->
 
-That line executes the "virtual"program every time the page is accessed.
+That line executes the "virtual" program every time the page is accessed.
 In order to allow the visitor to see the current statistics we provide
 another virtual link that is activated via a click on another page.
 For example:
