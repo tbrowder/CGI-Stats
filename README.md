@@ -1,6 +1,6 @@
 # CGI Statistics
 
-Use CGI variables, and the Raku programming language, to keep website visit sttaistics
+Use CGI variables, and the Raku programming language, to keep website visit statistics
 
 ## Anonymous website visits
 
