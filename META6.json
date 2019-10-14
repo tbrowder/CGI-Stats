@@ -1,5 +1,5 @@
 {
-    "version" : "0.0.2",
+    "version" : "0.0.1",
     "auth" : "github:tbrowder",
     "author" : "github:tbrowder",
     "authors" : [
@@ -7,26 +7,29 @@
     ],
     "build-depends" : [ ],
     "depends" : [ ],
-    "description" : "Provides enhancements to the built-in routine 'copy'.",
+    "description" : "Provides tools for tracking website visitors.",
     "license" : "Artistic-2.0",
-    "name" : "File::Copy",
+    "name" : "CGI::Stats",
     "perl" : "6.*",
     "provides" : {
-        "File::Copy"  : "lib/File/Copy.pm6",
-        "File::Utils" : "lib/File/Utils.pm6"
+        "CGI::Stats"      : "lib/CGI/Stats.pm6",
+        "CGI::Stats::CLI" : "lib/CGI/Stats/CLI.pm6",
+        "cgi-stats"       : "bin/cgi-stats"
     },
     "resources" : [ ],
     "source-type" : "git",
-    "source-url" : "git://github.com/tbrowder/File-Copy.git",
+    "source-url" : "git://github.com/tbrowder/cgi-stats-raku.git",
     "support" : {
-        "bugtracker" : "https://github.com/tbrowder/File-Copy/issues"
+        "bugtracker" : "https://github.com/tbrowder/cgi-stats-raku/issues"
     },
     "tags" : [
-        "file",
-        "copy"
+        "CGI",
+        "website",
+        "Apache",
+        "httpd",
+        "web"
     ],
     "test-depends" : [
-        "Test::META",
-        "File::Find"
+        "Test::META"
     ]
 }

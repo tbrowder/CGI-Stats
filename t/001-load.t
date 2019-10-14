@@ -3,6 +3,6 @@ use Test;
 
 plan 1;
 
-use File::Copy;
+use CGI::Stats;
 
-use-ok 'File::Copy';
+use-ok 'CGI::Stats';
