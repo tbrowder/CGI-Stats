@@ -41,5 +41,5 @@ For example:
 ## References
 
 1. [SQLite](https://sqlite.org)
-2. [Apache CGI](https://httpd.apache.org/2.4/docs/howto/cgi.html)
+2. [Apache CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
 3. [Raku](https://raku.org)
