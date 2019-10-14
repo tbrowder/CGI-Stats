@@ -1,0 +1,32 @@
+{
+    "version" : "0.0.2",
+    "auth" : "github:tbrowder",
+    "author" : "github:tbrowder",
+    "authors" : [
+        "Tom Browder <tom.browder@gmail.com>"
+    ],
+    "build-depends" : [ ],
+    "depends" : [ ],
+    "description" : "Provides enhancements to the built-in routine 'copy'.",
+    "license" : "Artistic-2.0",
+    "name" : "File::Copy",
+    "perl" : "6.*",
+    "provides" : {
+        "File::Copy"  : "lib/File/Copy.pm6",
+        "File::Utils" : "lib/File/Utils.pm6"
+    },
+    "resources" : [ ],
+    "source-type" : "git",
+    "source-url" : "git://github.com/tbrowder/File-Copy.git",
+    "support" : {
+        "bugtracker" : "https://github.com/tbrowder/File-Copy/issues"
+    },
+    "tags" : [
+        "file",
+        "copy"
+    ],
+    "test-depends" : [
+        "Test::META",
+        "File::Find"
+    ]
+}
