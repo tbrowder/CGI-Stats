@@ -25,7 +25,7 @@ which uses TLS client certificates to access a classmates-only
 
 ## Details
 
-The system requires several cgi programs and supporting modules, all written in Raku.
+The system requires several CGI programs and supporting modules, all written in Raku.
 Also required is an SQLite database to keep the data. The interface to the Internet
 is via the virtual interface in the home page's index.shtml file. Such an interface
 line looks something like this:
@@ -38,3 +38,8 @@ another virtual link that is activated via a click on another page.
 For example:
 
 
+## References
+
+1. [SQLite](https://sqlite.org)
+2. [Apache CGI](https://httpd.apache.org/2.4/docs/howto/)cgi.html
+3. [Raku](https://raku.org)
