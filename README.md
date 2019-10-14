@@ -38,6 +38,10 @@ another virtual link that is activated via a click on another page.
 For example:
 
 
+## Files
+
+## Directory structure
+
 ## References
 
 1. [SQLite](https://sqlite.org)
