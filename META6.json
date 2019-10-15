@@ -12,9 +12,9 @@
     "name" : "CGI::Stats",
     "perl" : "6.*",
     "provides" : {
-        "CGI::Stats"      : "lib/CGI/Stats.pm6",
-        "CGI::Stats::CLI" : "lib/CGI/Stats/CLI.pm6",
-        "cgi-stats"       : "bin/cgi-stats"
+        "CGI::Stats"                : "lib/CGI/Stats.pm6",
+        "cgi-stats-show.raku.cgi"   : "bin/cgi-stats-show.raku.cgi", 
+        "cgi-stats-update.raku.cgi" : "bin/cgi-stats-update.raku.cgi" 
     },
     "resources" : [ ],
     "source-type" : "git",
