@@ -1,6 +1,7 @@
 FETCHING ENVIRONMENT VARIABLES
 
-Some of the more useful environment variables can be fetched through this interface. The methods are as follows:
+Some of the more useful environment variables can be fetched 
+through this interface. The methods are as follows:
 
 Accept()
 
