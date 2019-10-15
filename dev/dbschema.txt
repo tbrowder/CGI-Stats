@@ -1,0 +1,168 @@
+CREATE TABLE total_stats (
+      ipname        text default 0,
+      datehour       text default 0,
+      highlandsprings int default 0,
+      mygnus          int default 0,
+      stevegriner     int default 0,
+      usafa           int default 0,
+      mantech         int default 0,
+      unknown         int default 0,
+      vh1             int default 0,
+      juvat           int default 0,
+      psrr int NOT NULL DEFAULT 0,
+      mbrowder int NOT NULL DEFAULT 0,
+      computertechnwf int
+NOT NULL DEFAULT 0, novco1968tbs int
+NOT NULL DEFAULT 0, www_usafa_1965_org int
+NOT NULL DEFAULT 0, nicevillepm int
+NOT NULL DEFAULT 0, nwflug int
+NOT NULL DEFAULT 0, www_psrr_info int
+NOT NULL DEFAULT 0, www_novco1968tbs_com int
+NOT NULL DEFAULT 0, webmail_novco1968tbs_com int
+NOT NULL DEFAULT 0, webmail_usafa_1965_org int
+NOT NULL DEFAULT 0, www_mbrowder_com int
+NOT NULL DEFAULT 0, mail_novco1968tbs_com int
+NOT NULL DEFAULT 0, www_nwflug_org int
+NOT NULL DEFAULT 0, ssl_usafa_1965_org int
+NOT NULL DEFAULT 0, ssl_novco1968tbs_com int
+NOT NULL DEFAULT 0, mail_usafa_1965_org int
+NOT NULL DEFAULT 0, secure_novco1968tbs_com int
+NOT NULL DEFAULT 0, owa_novco1968tbs_com int
+NOT NULL DEFAULT 0, secure_usafa_1965_org int
+NOT NULL DEFAULT 0, www_computertechnwf_org int
+NOT NULL DEFAULT 0, owa_usafa_1965_org int
+NOT NULL DEFAULT 0, alabam_info int
+NOT NULL DEFAULT 0, alabam_biz int
+NOT NULL DEFAULT 0, bv8arwvk_appspot_com int
+NOT NULL DEFAULT 0, www_alabam_biz int
+NOT NULL DEFAULT 0, cypnmg5k_appspot_com int
+NOT NULL DEFAULT 0, gbit_obhod_ug int
+NOT NULL DEFAULT 0, nwfbiz int
+NOT NULL DEFAULT 0, nwfco int
+NOT NULL DEFAULT 0, gqd6bdn5_appspot_com int
+NOT NULL DEFAULT 0, aixinst_com int
+NOT NULL DEFAULT 0, qmrkrdvc_appspot_com int
+NOT NULL DEFAULT 0, freestatesus int
+NOT NULL DEFAULT 0, example_com int
+NOT NULL DEFAULT 0, matanga_me int
+NOT NULL DEFAULT 0, xxnet_404_appspot_com int
+NOT NULL DEFAULT 0, xxnet_301_appspot_com int
+NOT NULL DEFAULT 0, z_h_e_n_116_appspot_com int
+NOT NULL DEFAULT 0, www_nwflorida_biz int
+NOT NULL DEFAULT 0, nwfpug_nwflorida_info int
+NOT NULL DEFAULT 0, xxnet_400_appspot_com int
+NOT NULL DEFAULT 0, nwfinfo int
+NOT NULL DEFAULT 0, z_h_e_n_119_appspot_com int
+NOT NULL DEFAULT 0, www_nwflorida_info int
+NOT NULL DEFAULT 0, www_highlandsprings61_org int
+NOT NULL DEFAULT 0, z_h_e_n_118_appspot_com int
+NOT NULL DEFAULT 0, nwflorida_biz int
+NOT NULL DEFAULT 0, alabam_us int
+NOT NULL DEFAULT 0, xxnet_402_appspot_com int
+NOT NULL DEFAULT 0, xxnet_403_appspot_com int
+NOT NULL DEFAULT 0, www_pythongroup_us int
+NOT NULL DEFAULT 0, pythongroup_us int
+NOT NULL DEFAULT 0, survey_tk int
+NOT NULL DEFAULT 0, tombrowder_com int
+NOT NULL DEFAULT 0, novco1968tbs_com_ int
+NOT NULL DEFAULT 0, psrr_info_ int
+NOT NULL DEFAULT 0, usafa_1965_org_ int
+NOT NULL DEFAULT 0, nwflorida_info_ int
+NOT NULL DEFAULT 0, mbrowder_com_ int
+NOT NULL DEFAULT 0, nwflug_org_ int
+NOT NULL DEFAULT 0, www_nwfpug_nwflorida_info int
+NOT NULL DEFAULT 0, computertechnwf_org_ int
+NOT NULL DEFAULT 0, www_google_com int
+NOT NULL DEFAULT 0, z_h_e_n_114_appspot_com int
+NOT NULL DEFAULT 0, xxnet_304_appspot_com int
+NOT NULL DEFAULT 0, z_h_e_n_117_appspot_com int
+NOT NULL DEFAULT 0, xxnet_303_appspot_com int
+NOT NULL DEFAULT 0, z_h_e_n_113_appspot_com int
+NOT NULL DEFAULT 0, smtp_tbrowder_net int
+NOT NULL DEFAULT 0, xxnet_401_appspot_com int
+NOT NULL DEFAULT 0, mail_computertechnwf_org int
+NOT NULL DEFAULT 0, mail_highlandsprings61_org int
+NOT NULL DEFAULT 0, mail_mygnus_com int
+NOT NULL DEFAULT 0, mail_psrr_info int
+NOT NULL DEFAULT 0, mail_nwflug_org int
+NOT NULL DEFAULT 0, nwfpug_nwflorida_info_ int
+NOT NULL DEFAULT 0, www_psrr_info_ int
+NOT NULL DEFAULT 0, www_mbrowder_com_ int
+NOT NULL DEFAULT 0, www_nwflorida_info_ int
+NOT NULL DEFAULT 0, mail_tbrowder_net_ int
+NOT NULL DEFAULT 0, www_nwflug_org_ int
+NOT NULL DEFAULT 0, dedi2_tbrowder_net_ int
+NOT NULL DEFAULT 0, www_computertechnwf_org_ int
+NOT NULL DEFAULT 0, www_nwfpug_nwflorida_info_ int
+NOT NULL DEFAULT 0, www_novco1968tbs_com_ int
+NOT NULL DEFAULT 0, www_usafa_1965_org_ int
+NOT NULL DEFAULT 0, konajoe_us int
+NOT NULL DEFAULT 0, www_konajoe_us int
+NOT NULL DEFAULT 0, perfectionbypernilla_com int
+NOT NULL DEFAULT 0, www_tampaconservative_com int
+NOT NULL DEFAULT 0, qwxu_com int
+NOT NULL DEFAULT 0, rentvirginiahomes_com int
+NOT NULL DEFAULT 0, summanussecurityconsulting_org int
+NOT NULL DEFAULT 0, magictracks55_ru int
+NOT NULL DEFAULT 0, becasuniversitarias_net int
+NOT NULL DEFAULT 0, www_spiritualpod_info int
+NOT NULL DEFAULT 0, miniindash_com_br int
+NOT NULL DEFAULT 0, cherchemidiny_net int
+NOT NULL DEFAULT 0, www_documentfolder_net int
+NOT NULL DEFAULT 0, candacedalton_net int
+NOT NULL DEFAULT 0, group_ib_ru int
+NOT NULL DEFAULT 0, www_group_ib_ru int
+NOT NULL DEFAULT 0, bhf_io int
+NOT NULL DEFAULT 0, darkpro_ws int
+NOT NULL DEFAULT 0, piratebuhta_cc int
+NOT NULL DEFAULT 0, en_wt1_pw int
+NOT NULL DEFAULT 0, monster_hack_su int
+NOT NULL DEFAULT 0, evil_hack_us int
+NOT NULL DEFAULT 0, crackcommunity_com int
+NOT NULL DEFAULT 0, christcenteredmarriages_com int
+NOT NULL DEFAULT 0, bag_support_nl int
+NOT NULL DEFAULT 0, www_www501cccom7_accountant int
+NOT NULL DEFAULT 0, www_seventh_wave_org int
+NOT NULL DEFAULT 0, tutorance_com int
+NOT NULL DEFAULT 0, psh_world_ru int
+NOT NULL DEFAULT 0, buybestbiz_net int
+NOT NULL DEFAULT 0, troyhack_xyz int
+NOT NULL DEFAULT 0, rescator_cm int
+NOT NULL DEFAULT 0, hack_faq_ru int
+NOT NULL DEFAULT 0, swipe_bz int
+NOT NULL DEFAULT 0, yalelodge_ru int
+NOT NULL DEFAULT 0, anon_team_xyz int
+NOT NULL DEFAULT 0, uxt_ooo int
+NOT NULL DEFAULT 0, blackpass_cc int
+NOT NULL DEFAULT 0, ifud_ws int
+NOT NULL DEFAULT 0, hack_free_net int
+NOT NULL DEFAULT 0, goldendumps_cc int
+NOT NULL DEFAULT 0, crimebiz_net int
+NOT NULL DEFAULT 0, blackbiz_ws int
+NOT NULL DEFAULT 0, briansclub_at int
+NOT NULL DEFAULT 0, www_perl6_club int
+NOT NULL DEFAULT 0, perl6_club int
+NOT NULL DEFAULT 0, ghostbin_com int
+NOT NULL DEFAULT 0, mail_canterburycircle_us int
+NOT NULL DEFAULT 0, entegrasyon_asseco_see_com_tr int
+NOT NULL DEFAULT 0, f_111_org int
+NOT NULL DEFAULT 0, mail_moody67a_org int
+NOT NULL DEFAULT 0, www_perl6_app int
+NOT NULL DEFAULT 0, www_santamap_net int
+NOT NULL DEFAULT 0, santamap_net int
+NOT NULL DEFAULT 0, perl6_app int
+NOT NULL DEFAULT 0);
+
+CREATE TABLE ssl_stats (
+      email        text default 0,
+      datehour       text default 0,
+      highlandsprings int default 0,
+      mygnus          int default 0,
+      stevegriner     int default 0,
+      usafa           int default 0,
+      mantech         int default 0,
+      unknown         int default 0,
+      vh1             int default 0,
+      juvat           int default 0
+    , www_usafa_1965_org int
+NOT NULL DEFAULT 0);

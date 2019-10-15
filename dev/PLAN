@@ -1,0 +1,29 @@
+Plan to switch to Perl 6 AND 
+simplify web stats database
+handling:
+
+1. Rewrite funcs and modules in Perl 6.
+   Define another name for the main db.
+   Define a new format for the new db: ensure
+   vhost column names are only self-owned
+   canonical SDOM_DOM_TLD with NO www, etc.
+   Use the regex something like this:
+
+   if $vhost ~~ / $canonical / {
+       # use row with $canonical name
+   }
+
+
+2. Put the new suite of tools in
+   the main CGI bin dir.
+
+3. Add the new tools to the existing
+   html files.
+
+4. After a period of testing, compare
+   the databases. If they are the same,
+   stop the web server, convert the old
+   db to the new format, and replace 
+   Perl 5 and the old db with Perl 6
+   and the new db.
+

@@ -1,0 +1,142 @@
+#!/usr/local/rakudo.d/bin/perl6
+
+# NOTE THE MANDATORY SHEBANG LINE FOR CGI PROGS!!
+
+# execute this script in SSI html page with:
+#   <!--#include virtual="/cgi-bin-cmn/update-site-statistics.cgi6" -->
+# NOTE NO SPACE AFTER '<!--'
+
+# need special header stuff for CGI to be included in html (and for
+# SSI even though nothing else will be written)
+say "Content-type: text/plain\n";
+
+my $ip     = %*ENV<REMOTE_ADDR>;
+my $vh     = %*ENV<>;
+my $ipname = $ip ?? get-ipname($ip) !! 'unknown';
+
+# get site
+# vhost name may show up in several ways in various
+# envvars so we make a string of them for comparison
+# in a regex against known host names 
+
+my $vhost; # <== determine this
+my $vcol;  # <== determine this
+my $email; # <== determine this
+
+# the update queries
+=begin comment
+# total_stats
+
+# don't use this in this prog since we
+# have tight control over vhosts
+# and the table columns
+search for existence of a vhost column
+  if not exists # a function
+    add column # sql
+
+search for an existing ipname datehour
+  if it exists # a function
+    update vhost column to 1 # sql
+  else
+    insert new row with # sql
+      ipname datehour vhost=1
+
+=end comment
+=begin comment
+# ssl_stats
+=end comment
+
+
+# 
+my $site          = $vh; #$ENV{HTTP_REFERER}; # $cgi->virtual_host(); #('REFERER');
+#my $vhost         = get_virtual_host($site);
+my $vhostcolname = get_vhost_colname($site);
+if ($debug) {
+  print "DEBUG: site         = '$site' for site '$site'\n";
+  print "DEBUG: vhostcolname = '$vhostcolname'\n";
+  print "DEBUG: vh           = '$vh'\n";
+}
+
+# email from SSL client cert
+my $email = $ENV{SSL_CLIENT_S_DN_Email};
+$email = 0 if !defined $email;
+
+#print STDOUT "vhost = '$vhost' for site '$site'\n";
+#exit 1;
+# allow testing from host juvat
+my $lhost = $ENV{TMB_MAKE_HOST};
+if ($vhostcolname =~ /unknown/ && !$lhost) {
+  print STDOUT "SERVER_NAME '$vhostcolname' for site (REFERER) '$site' unknown!\n";
+  ++$error;
+}
+
+# get current datestring
+my $datestring = get_gmtime_site_access();
+# that is my desired form for database use
+if (!defined $datestring) {
+  error($cgi, "DATE_GMT unknown!\n");
+}
+
+# need db file name (it's relative now);
+my $dbfname = get_database_filename();
+my $dbh     = get_database_handle($dbfname);
+if (!$dbh) {
+  error($cgi, "\$dbh is null\n");
+}
+
+if ($debug) {
+  print STDOUT "debug: \$ip           = '$ip'\n";
+  print STDOUT "       \$ipname       = '$ipname'\n";
+  print STDOUT "       \$site         = '$site'\n";
+  print STDOUT "       \$datestring   = '$datestring'\n";
+  print STDOUT "       \$vhostcolname = '$vhostcolname'\n";
+  print STDOUT "       \$dbfname      = '$dbfname'\n";
+  print STDOUT "       \$email        = '$email'\n";
+  if (@ARGV) {
+    print STDOUT "       contents of \@ARGV:\n";
+    foreach my $arg (@ARGV) {
+      print STDOUT "         '$arg'\n";
+    }
+  }
+  else {
+    print STDOUT "       \@ARGV is empty\n";
+  }
+  my $qs = $ENV{QUERY_STRING};
+  if (defined $qs) {
+    print STDOUT "       \$QUERY_STRING = '$qs'\n";
+  }
+  else {
+    print STDOUT "       \$QUERY_STRING is empty\n";
+  }
+}
+
+die "ERROR exit.\n" if $error;
+
+if (0 && $ip eq '0.0.0.0') {
+  print "debug: cmd = 'update(\$dbh, $ipname, $datestring, $vhostcolname);'\n";
+  die "debug exit";
+}
+
+# need some debugging here
+update_stats($dbh, $ipname, $datestring, $vhostcolname, 'ip');
+
+# need some debugging here
+update_stats($dbh, $email, $datestring, $vhostcolname, 'email')
+  if $email;
+
+$dbh->disconnect;
+
+=pod
+
+# now try cookies
+# from example 11-4, CGI Programming with Perl, 2e:
+my $q          = new CGI;
+my $source_cgi = basename($0);
+$source_cgi    = "/cgi-bin/$source_cgi";
+my $user_id = $q->cookie(-name => 'user_id') || set_cookie($q, $source_cgi);
+exit if !$user_id;
+
+my $hours = int(time / 3600); # hours since the epoch
+update_cookie_stats($dbh, $user_id, $hours, $vhost);
+
+=cut

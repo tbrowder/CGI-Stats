@@ -1,0 +1,377 @@
+#!/usr/local/rakudo.d/bin/perl6
+
+# NOTE THE MANDATORY SHEBANG LINE FOR CGI PROGS!!
+
+use strict;
+use warnings;
+
+use CGI;
+
+use lib ('.');
+use CGIBookError;
+use WEB_SQLite3_funcs (':all');
+use WEB_dbi_funcs (':all');
+use WEB_general_funcs (':all');
+
+my $debug = 0;
+my $dump  = 0;
+
+my $lhost = $ENV{TMB_MAKE_HOST};
+if (!defined $lhost || $lhost !~ /juvat2/) {
+  $lhost = 0;
+}
+else {
+  # read @ARGV
+  for my $arg (@ARGV) {
+    if ($arg eq 'debug') {
+      $debug = 1;
+    }
+    elsif ($arg eq 'dump') {
+      $dump = 1;
+    }
+  }
+}
+
+my $error = 0;
+# get user's IP
+my $ip = $ENV{REMOTE_ADDR};
+if (!defined $ip) {
+  if ($lhost) {
+    $ip = '127.0.0.1'; # local host
+  }
+  else {
+    # hack
+    my $cgi = CGI->new();
+    $ip = $cgi->remote_addr();
+    print STDERR "REMOTE_ADDR unknown!\n" if !defined $ip;
+    ++$error;
+  }
+}
+# translate IP address as an IP name (stringified)
+my $ipname = defined $ip ? get_ipname($ip) : 'unknown';
+
+# get site: should be in cgi envvar SERVER_NAME
+my $site = $ENV{SERVER_NAME};
+if ($lhost) {
+  $site = 'usafa-1965.org'
+}
+my $vhost = get_virtual_host($site);
+# allow testing from host juvat
+if ($vhost =~ /unknown/  & !$lhost) {
+  print STDERR "SERVER_NAME unknown!\n";
+  ++$error;
+}
+
+# put a link back to the home page
+my $referer = $ENV{HTTP_REFERER};
+
+# usafa site needs an explicit link because it's in a subdir
+if ($vhost =~ /usafa/i) {
+  $referer = 'https://usafa-1965.org/index.html';
+}
+
+=pod
+
+if ($debug) {
+  print STDERR "debug: \$ip         = '$ip'\n";
+  print STDERR "       \$ipname     = '$ipname'\n";
+  print STDERR "       \$site       = '$site'\n";
+  print STDERR "       \$vhost      = '$vhost'\n";
+  if (@ARGV) {
+    print STDERR "       contents of \@ARGV:\n";
+    foreach my $arg (@ARGV) {
+      print STDERR "         '$arg'\n";
+    }
+  }
+  else {
+    print STDERR "       \@ARGV is empty\n";
+  }
+  if (defined $q) {
+    print STDERR "       \$QUERY_STRING = '$q'\n";
+  }
+  else {
+    print STDERR "       \$QUERY_STRING is empty\n";
+  }
+}
+
+=cut
+
+# need db file name (it's relative now);
+my $dbfname = get_database_filename();
+my $dbh     = get_database_handle($dbfname);
+if (!$dbh) {
+  print STDERR "       \$dbh is null\n";
+  ++$error;
+}
+
+my $q = CGI->new;
+if ($error) {
+  error($q, "\$dbh is null\n");
+}
+
+if ($dump) {
+  # dump everything
+  dump_all_tables($dbh);
+}
+
+# get IP stats
+my $ip_stats_table  = get_tablename('ip');
+my $this_ip_stats   = get_two_column_sum($dbh, $ip_stats_table, $vhost, $ipname, 'ip');
+my $uniq_ip_stats   = get_two_column_count($dbh, $ip_stats_table, $vhost, 'ip');
+$uniq_ip_stats     -= 1;
+my $total_ip_stats  = get_column_sum($dbh, $ip_stats_table, $vhost);
+
+# email from SSL client cert
+my $email = $ENV{SSL_CLIENT_S_DN_Email};
+$email = 0 if !defined $email;
+
+# get ssl email stats, if any
+my ($email_stats_table,$this_email_stats, $uniq_email_stats,$total_email_stats);
+if ($email) {
+  $email_stats_table  = get_tablename('email');
+  $this_email_stats   = get_two_column_sum($dbh, $email_stats_table, $vhost, $email, 'email');
+  $uniq_email_stats   = get_two_column_count($dbh, $email_stats_table, $vhost, 'email');
+  $uniq_email_stats  -= 1;
+  $total_email_stats  = get_column_sum($dbh, $email_stats_table, $vhost);
+}
+
+if ($debug) {
+  print STDERR "DEBUG: \n";
+  print STDERR "  vhost          = '$vhost'\n";
+  print STDERR "  ipname         = '$ipname'\n";
+  print STDERR "  ip_stats_table = '$ip_stats_table'\n";
+  print STDERR "  this_ip_stats  = '$this_ip_stats'\n";
+  print STDERR "  uniq_ip_stats  = '$uniq_ip_stats'\n";
+  print STDERR "  total_ip_stats = '$total_ip_stats'\n";
+
+  if ($email) {
+    print STDERR "  email             = '$email'\n";
+    print STDERR "  email_stats_table = '$email_stats_table'\n";
+    print STDERR "  this_email_stats  = '$this_email_stats'\n";
+    print STDERR "  uniq_email_stats  = '$uniq_email_stats'\n";
+    print STDERR "  total_email_stats = '$total_email_stats'\n";
+  }
+  ++$error;
+}
+
+die "ERROR exit.\n" if $error;
+
+my $num_places = 6;
+my @ipstats = (\$this_ip_stats, \$uniq_ip_stats, \$total_ip_stats);
+foreach my $s (@ipstats) {
+  # format numbers
+  $$s = format_count($$s, $num_places);
+  # now style them
+  $$s = "<span class=\"num\">$$s</span>";
+}
+
+my @emailstats = ();
+if ($email) {
+  @emailstats = (\$this_email_stats, \$uniq_email_stats, \$total_email_stats);
+  foreach my $s (@emailstats) {
+    # format numbers
+    $$s = format_count($$s, $num_places);
+    # now style them
+    $$s = "<span class=\"num\">$$s</span>";
+  }
+}
+
+my $additional_stats = 0;
+# show cookie (user_id) stats if we have data
+my $user_id  = 0;
+
+# allow registration
+my $user_registration = 0;
+# finished with db handle
+$dbh->disconnect();
+
+# now print the page (in chunks)
+{
+  print <<"HERE";
+Content-type: text/html
+
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Site Statistics</title>
+
+<style>
+  .rightstats {
+    text-align: left;
+  }
+  .num {
+    width: auto;
+    background: #008000;
+    color: #ffffff;
+    font-size: 1.0em;
+    font-family: 'Arial Black', Gadget, sans-serif;
+  }
+  .text {
+    width: 600px;
+  }
+</style>
+
+</head>
+
+<body>
+
+<h4><a href="$referer">Site Home</a></h4>
+
+<div id="stats">
+  <h4 class="statistics">Site Statistics for &lt;$vhost&gt;:</h4>
+HERE
+}
+
+if ($email) {
+  print <<"HERE";
+
+  <h3 class="statistics">TLS Statistics:</h3>
+
+  <table class="stats">
+    <tr>
+      <td class="leftstats">Your TLS certificate e-mail address (TCEMA):</td><td class="rightstats">$email</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Your TCEMA visits:</td><td class="rightstats">$this_email_stats</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Other persons' unique TCEMA visits:</td><td class="rightstats">$uniq_email_stats</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Total TCEMA visits:</td><td class="rightstats">$total_email_stats</td>
+    </tr>
+  </table>
+
+  <!-- a form -->
+  <form>
+    <p>
+      Show
+        <select name="choice" size="1">
+          <option selected>last</option>
+          <option>first</option>
+        </select>
+        <input type="text" name="num_to_show" value="10" size="1" />
+      visit(s).
+        <input type="submit" name="submit" value="Submit" size="1" />
+    </p>
+  </form>
+
+
+HERE
+}
+
+# this always gets printed
+{
+  print <<"HERE";
+
+  <h3 class="statistics">IP Address Statistics:</h3>
+
+  <table class="stats">
+    <tr>
+      <td class="leftstats">Your IP address (IPA):</td><td class="rightstats">$ip</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Your IPA visits:</td><td class="rightstats">$this_ip_stats</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Other unique IPA visits:</td><td class="rightstats">$uniq_ip_stats</td>
+    </tr>
+    <tr>
+      <td class="leftstats">Total IPA visits:</td><td class="rightstats">$total_ip_stats</td>
+    </tr>
+  </table>
+HERE
+}
+
+if ($user_id) {
+  print <<"HERE";
+HERE
+}
+
+print "<h4>Notes:</h4><ul>\n";
+
+if ($email) {
+  print <<"HERE";
+  <li>
+  <p class='text'>You have presented an TLS client certificate with user e-mail address \"$email\".
+  </p>
+  </li>
+HERE
+}
+
+=pod
+
+else {
+  print <<"HERE";
+  <li>
+  <p class='text'>You have presented NO SSL client certificate with an user e-mail address.
+  </p>
+  </li>
+HERE
+}
+
+=cut
+
+if ($additional_stats && !$user_id) {
+  print <<"HERE";
+  <li>
+  <p class="text">If you enable site cookies in your browser, your visits from each
+  computer you use can be logged and reported.
+  </p>
+  </li>
+HERE
+}
+
+if ($additional_stats && !$user_registration) {
+  print <<"HERE";
+  <li>
+  <p class="text">If you register and then login on each visit, you can receive e-mail
+  announcements and also have your visit statistic associated with your login
+  name regardless of what computer you use.
+  </p>
+  </li>
+HERE
+}
+
+{
+  print <<"HERE";
+  <li>
+  <p class="text">A single IP address is considered to have a single visit for any
+  front page access during the span of any one hour.  So, for
+  instance, if you access the front page on 2011/06/23 at 1030, 1055,
+  and 1115 you will be credited with two visits for that day, one for
+  the period 1000-1059 and one for the period 1100-1159.
+  </p>
+  </li>
+
+  <li>
+  <p class="text">The "Other unique IPA visits" statistic counts only one
+  visit for each unique IP address regardless of the number of visits by
+  that IP address.
+  </p>
+  </li>
+HERE
+}
+
+if ($email) {
+  print <<"HERE";
+
+  <li>
+  <p class="text">The notes above also apply to e-mail statistics.
+  </p>
+  </li>
+HERE
+}
+
+
+{
+  print <<"HERE";
+
+  </ul>
+</div><!-- end div stats -->
+
+</body>
+</html>
+HERE
+}

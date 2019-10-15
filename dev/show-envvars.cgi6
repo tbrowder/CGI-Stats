@@ -1,0 +1,15 @@
+#!/usr/local/rakudo.d/bin/perl6
+
+# NOTE THE MANDATORY SHEBANG LINE FOR CGI PROGS!!
+
+use CGI::Applicaton;
+
+my $cgi = CGI.new();
+
+print $cgi->header('Content-type: text/html');
+print "\n\n";
+
+foreach my $var (sort keys %ENV) {
+  #print "<p><b>$var</b></p><br />";
+  print "$var    $ENV{$var}\n";
+}

@@ -1,0 +1,169 @@
+FETCHING ENVIRONMENT VARIABLES
+
+Some of the more useful environment variables can be fetched through this interface. The methods are as follows:
+
+Accept()
+
+Return a list of MIME types that the remote browser accepts. If you
+give this method a single argument corresponding to a MIME type, as in
+Accept('text/html'), it will return a floating point value
+corresponding to the browser's preference for this type from 0.0
+(don't want) to 1.0. Glob types (e.g. text/*) in the browser's accept
+list are handled correctly.
+
+Note that the capitalization changed between version 2.43 and 2.44 in
+order to avoid conflict with perl's accept() function.
+
+raw_cookie()
+
+Returns the HTTP_COOKIE variable. Cookies have a special format, and
+this method call just returns the raw form (?cookie dough). See
+cookie() for ways of setting and retrieving cooked cookies.
+
+Called with no parameters, raw_cookie() returns the packed cookie
+structure. You can separate it into individual cookies by splitting on
+the character sequence "; ". Called with the name of a cookie,
+retrieves the unescaped form of the cookie. You can use the regular
+cookie() method to get the names, or use the raw_fetch() method from
+the CGI::Cookie module.
+
+env_query_string()
+
+Returns the QUERY_STRING variable, note that this is the original
+value as set in the environment by the webserver and (possibly) not
+the same value as returned by query_string(), which represents the
+object state
+
+user_agent()
+
+Returns the HTTP_USER_AGENT variable. If you give this method a single
+argument, it will attempt to pattern match on it, allowing you to do
+something like user_agent(Mozilla);
+
+path_info()
+
+Returns additional path information from the script URL. E.G. fetching
+/cgi-bin/your_script/additional/stuff will result in path_info()
+returning "/additional/stuff".
+
+NOTE: The Microsoft Internet Information Server is broken with respect
+to additional path information. If you use the perl DLL library, the
+IIS server will attempt to execute the additional path information as
+a perl script. If you use the ordinary file associations mapping, the
+path information will be present in the environment, but
+incorrect. The best thing to do is to avoid using additional path
+information in CGI scripts destined for use with IIS. A best attempt
+has been made to make CGI.pm do the right thing.
+
+path_translated()
+
+As per path_info() but returns the additional path information
+translated into a physical path,
+e.g. "/usr/local/etc/httpd/htdocs/additional/stuff".
+
+The Microsoft IIS is broken with respect to the translated path as
+well.
+
+remote_host()
+
+Returns either the remote host name or IP address if the former is
+unavailable.
+
+remote_ident()
+
+Returns the name of the remote user (as returned by identd) or undef
+if not set
+
+remote_addr()
+
+Returns the remote host IP address, or 127.0.0.1 if the address is
+unavailable.
+
+request_uri()
+
+Returns the interpreted pathname of the requested document or CGI
+(relative to the document root). Or undef if not set.
+
+script_name()
+
+Return the script name as a partial URL, for self-referring scripts.
+
+referer()
+
+Return the URL of the page the browser was viewing prior to fetching
+your script.
+
+auth_type()
+
+Return the authorization/verification method in use for this script,
+if any.
+
+server_name()
+
+Returns the name of the server, usually the machine's host name.
+
+virtual_host()
+
+When using virtual hosts, returns the name of the host that the
+browser attempted to contact
+
+server_port()
+
+Return the port that the server is listening on.
+
+server_protocol()
+
+Returns the protocol and revision of the incoming request, or defaults
+to HTTP/1.0 if this is not set
+
+virtual_port()
+
+Like server_port() except that it takes virtual hosts into
+account. Use this when running with virtual hosts.
+
+server_software()
+
+Returns the server software and version number.
+
+remote_user()
+
+Return the authorization/verification name used for user verification,
+if this script is protected.
+
+user_name()
+
+Attempt to obtain the remote user's name, using a variety of different
+techniques. May not work in all browsers.
+
+request_method()
+
+Returns the method used to access your script, usually one of 'POST',
+'GET' or 'HEAD'.
+
+content_type()
+
+Returns the content_type of data submitted in a POST, generally
+multipart/form-data or application/x-www-form-urlencoded
+
+http()
+
+Called with no arguments returns the list of HTTP environment
+variables, including such things as HTTP_USER_AGENT,
+HTTP_ACCEPT_LANGUAGE, and HTTP_ACCEPT_CHARSET, corresponding to the
+like-named HTTP header fields in the request. Called with the name of
+an HTTP header field, returns its value. Capitalization and the use of
+hyphens versus underscores are not significant.
+
+For example, all three of these examples are equivalent:
+
+  my $requested_language = $q->http('Accept-language');
+
+  my $requested_language = $q->http('Accept_language');
+
+  my $requested_language = $q->http('HTTP_ACCEPT_LANGUAGE');
+
+https()
+
+The same as http(), but operates on the HTTPS environment variables
+present when the SSL protocol is in effect. Can be used to determine
+whether SSL is turned on.

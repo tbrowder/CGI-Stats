@@ -1,0 +1,34 @@
+The main problem with the original scheme
+for stats collection was determining
+the virtual host accurately. After
+looking at the raw data collected, I
+believe I should do the following:
+
+0. create a list of mappings from
+   SUB.DOM.TLDs of interest to column 
+   names, e.g.,
+
+     my %doms = %(
+         nwflug.org => 'nwflug_org',
+     );
+
+1. check several envvar values to 
+   determine the vhost:
+
+     my $vhost = 0; 
+     my $vcol  = 0;
+     my $test-string = join @envvars-values;
+     for %domlist.kv -> $k, $v {
+         # protect the periods in the key
+         if $test-string ~~ /:i '$k'/ {
+             $vhost = $k;
+             $vcol  = $v;
+             last;
+         }
+     }
+     exit if !$vhost;
+     # handle logging...
+
+     
+
+

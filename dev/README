@@ -1,0 +1,42 @@
+We want to record the following data from our
+virtual websites:
+
+  the IP who visited
+  time of visit (yyyyddmmThh)
+  virtual host visited (canonical name)
+
+  if a client tls cert was presented,
+    record the email of the visitor
+
+In order to do that we define the following
+two tables:
+
+    create table if not exists tls_stats (
+        email text,
+        vhost text,
+        datehour int,
+        unique (email, vhost, datehour)
+    );
+
+    create table if not exists ip_stats (
+        ip text,
+        vhost text,
+        datehour int,
+        unique (ip, vhost, datehour)
+    );
+
+We need two CGI programs which can be used
+for each virtual host:
+
+  a program that runs at each access of
+    a virtual host's index.shtml page
+    and collects and stores the data
+
+  a program that reports the data upon
+    request by the visitor
+
+For testing, we also need a separate 
+second program that collects stats in
+another db.
+
+
