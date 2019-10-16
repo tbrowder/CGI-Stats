@@ -1,7 +1,7 @@
 We want to record the following data from our
 virtual websites:
 
-  the IP who visited
+  the IP who visited (handle ipv4 and ipv6)
   time of visit (yyyyddmmThh)
   virtual host visited (canonical name)
 
@@ -19,10 +19,11 @@ two tables:
     );
 
     create table if not exists ip_stats (
-        ip text,
+        ip int,     -- use Net::IP to convert to-from IP-uint
+        ipversion int, -- 4 or 6
         vhost text,
         datehour int,
-        unique (ip, vhost, datehour)
+        unique (ip, ipversion, vhost, datehour)
     );
 
 We need two CGI programs which can be used
@@ -35,7 +36,7 @@ for each virtual host:
   a program that reports the data upon
     request by the visitor
 
-For testing, we also need a separate 
+For testing, we also need a separate, 
 second program that collects stats in
 another db.
 
