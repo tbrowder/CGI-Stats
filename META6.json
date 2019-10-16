@@ -13,9 +13,9 @@
     "description" : "Provides tools for tracking website visitors.",
     "license" : "Artistic-2.0",
     "provides" : {
-        "CGI::Stats"                : "lib/CGI/Stats.pm6",
-        "show-stats.raku"   : "bin/cgi-stats-show.raku.cgi", 
-        "update-stats.raku" : "bin/cgi-stats-update.raku.cgi" 
+        "CGI::Stats"        : "lib/CGI/Stats.pm6",
+        "show-stats.raku"   : "bin/show-stats.raku", 
+        "update-stats.raku" : "bin/update-stats.raku" 
     },
     "resources" : [ ],
     "source-type" : "git",
