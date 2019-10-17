@@ -4,15 +4,9 @@ handling:
 
 1. Rewrite funcs and modules in Perl 6.
    Define another name for the main db.
-   Define a new format for the new db: ensure
-   vhost column names are only self-owned
-   canonical SDOM_DOM_TLD with NO www, etc.
-   Use the regex something like this:
-
-   if $vhost ~~ / $canonical / {
-       # use row with $canonical name
-   }
-
+   Define a new format for the new db: see methods
+   used for computertch email for
+   application to this process
 
 2. Put the new suite of tools in
    the main CGI bin dir.

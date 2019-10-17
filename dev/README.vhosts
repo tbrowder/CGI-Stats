@@ -4,25 +4,23 @@ the virtual host accurately. After
 looking at the raw data collected, I
 believe I should do the following:
 
-0. create a list of mappings from
-   SUB.DOM.TLDs of interest to column 
-   names, e.g.,
+0. create a list of 
+   SUB.DOM.TLDs of interest, e.g.,
 
-     my %doms = %(
-         nwflug.org => 'nwflug_org',
+     my %doms = set <
+         nwflug\.org 
+         psrr\.info
      );
 
 1. check several envvar values to 
    determine the vhost:
 
      my $vhost = 0; 
-     my $vcol  = 0;
      my $test-string = join @envvars-values;
-     for %domlist.kv -> $k, $v {
-         # protect the periods in the key
-         if $test-string ~~ /:i '$k'/ {
+     for %domlist.keys -> $k {
+         # protect the periods in the key??
+         if $test-string ~~ /:i $k/ {
              $vhost = $k;
-             $vcol  = $v;
              last;
          }
      }
