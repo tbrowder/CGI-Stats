@@ -1,4 +1,4 @@
-# CGI Statistics
+# CGI::Stats
 
 Use CGI variables, and the Raku programming language, to keep website
 visit statistics
@@ -64,7 +64,7 @@ Tom Browder, `<tom.browder@gmail.com>`
 COPYRIGHT & LICENSE
 ===================
 
-Copyright (c) 2019 Tom Browder, all rights reserved.
+Copyright (c) 2019-2020 Tom Browder, all rights reserved.
 
 This program is free software; you can redistribute it or modify
 it under the same terms as Perl 6 itself.
